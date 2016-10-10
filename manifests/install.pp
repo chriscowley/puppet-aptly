@@ -66,13 +66,24 @@ class aptly::install {
   }
 
   if $aptly::manage_xz_utils == true {
-    package { 'xz-utils':
+    package { $xzpackage:
       ensure => present,
     }
   }
 
-  package { 'aptly':
-    ensure   => $aptly::version,
+  case $::osfamily {
+    'Debian': {
+      package { 'aptly':
+        ensure   => $aptly::version,
+      }
+    }
+    'RedHat': {
+      staging::deploy { 'aptly_0.9.7_linux_amd64.tar.gz':
+        source => 'https://bintray.com/artifact/download/smira/aptly/aptly_0.9.7_linux_amd64.tar.gz',
+        target => '/usr/local/bin',
+      }
+
+    }
   }
 
   file{ '/etc/init.d/aptly':

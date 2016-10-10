@@ -29,6 +29,7 @@ class aptly (
   $api_bind             = $aptly::params::api_bind,
   $api_nolock           = $aptly::params::api_nolock,
   $manage_xz_utils      = $aptly::params::manage_xz_utils,
+  $xzpackage            = $aptly::params::xzpackage,
 ) inherits aptly::params {
 
   validate_string(

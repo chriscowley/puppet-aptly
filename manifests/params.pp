@@ -40,4 +40,16 @@ class aptly::params {
   $api_bind             = '0.0.0.0'
   $api_nolock           = false
   $manage_xz_utils      = true
+  
+  case $::osfamily {
+    'Debian': {
+      $xzpackage = 'xz-utils'
+    }
+    'RedHat': {
+      $xzpackage = 'xz'
+    }
+    default: {
+      fail("Installation of LZMA not support on ${::operatingsystem}")
+    }
+  }
 }
